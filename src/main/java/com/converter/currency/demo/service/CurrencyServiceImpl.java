@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -40,7 +39,10 @@ public class CurrencyServiceImpl implements CurrencyService {
     @Override
     public Double getCurrencyRateFor(String source, String currency, String date) throws CurrencyException{
     	RestTemplate restTemplate = new RestTemplate();
-    	String value = restTemplate.getForObject(String.format("http://apilayer.net/api/historical?access_key=86ff9d67eabd34d308bd8d42d7cbc61a&date=%s&currencies=%s", date,currency), String.class);
+    	String value = restTemplate.getForObject(String.
+    			format("http://apilayer.net/api/historical?access_key"
+    					+ "=86ff9d67eabd34d308bd8d42d7cbc61a&date=%s&currencies=%s", 
+    					date,currency), String.class);
     	JSONObject jsonObject = new JSONObject(value);
     	if(jsonObject.getBoolean("success")){
     		JSONObject quotes = jsonObject.getJSONObject("quotes");

@@ -28,34 +28,12 @@ public class UserValidator implements Validator {
 	@Override
     public void validate(Object o, Errors errors) {
         User user = (User) o;
+        validatePrimaryFields(user, errors);
+        validateSecondaryFields(user,errors);
+    }
 
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "username", "NotEmpty");
-        if (user.getUsername().length() < 4 || user.getUsername().length() > 32) {
-            errors.rejectValue("username", "Size.userForm.username");
-        }
-        if (userService.findByUsername(user.getUsername()) != null) {
-            errors.rejectValue("username", "Duplicate.userForm.username");
-        }
-
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "NotEmpty");
-        if (user.getPassword().length() < 4 || user.getPassword().length() > 32) {
-            errors.rejectValue("password", "Size.userForm.password");
-        }
-
-        if (!user.getPasswordConfirm().equals(user.getPassword())) {
-            errors.rejectValue("passwordConfirm", "Diff.userForm.passwordConfirm");
-        }
-
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "NotEmpty");
-        if (user.getEmail().length() < 6 || user.getEmail().length() > 64) {
-            errors.rejectValue("email", "Size.userForm.email");
-        }
-        if(!EmailValidator.getInstance().isValid(user.getEmail())){
-            errors.rejectValue("email", "Invalid.userForm.email");
-        }
-        
-
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "dob", "NotEmpty");
+	private void validateSecondaryFields(User user, Errors errors) {
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "dob", "NotEmpty");
         try {
 			Date date = format.parse(user.getDob());
 			if(date.getTime() > new Date().getTime()){
@@ -82,5 +60,32 @@ public class UserValidator implements Validator {
         }
 
        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "country", "NotEmpty");
-    }
+	}
+
+	private void validatePrimaryFields(User user, Errors errors) {
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "username", "NotEmpty");
+        if (user.getUsername().length() < 4 || user.getUsername().length() > 32) {
+            errors.rejectValue("username", "Size.userForm.username");
+        }
+        if (userService.findByUsername(user.getUsername()) != null) {
+            errors.rejectValue("username", "Duplicate.userForm.username");
+        }
+
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "NotEmpty");
+        if (user.getPassword().length() < 4 || user.getPassword().length() > 32) {
+            errors.rejectValue("password", "Size.userForm.password");
+        }
+
+        if (!user.getPasswordConfirm().equals(user.getPassword())) {
+            errors.rejectValue("passwordConfirm", "Diff.userForm.passwordConfirm");
+        }
+
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "NotEmpty");
+        if (user.getEmail().length() < 6 || user.getEmail().length() > 64) {
+            errors.rejectValue("email", "Size.userForm.email");
+        }
+        if(!EmailValidator.getInstance().isValid(user.getEmail())){
+            errors.rejectValue("email", "Invalid.userForm.email");
+        }
+	}
 }
