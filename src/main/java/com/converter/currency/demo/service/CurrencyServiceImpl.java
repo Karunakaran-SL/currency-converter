@@ -24,8 +24,8 @@ public class CurrencyServiceImpl implements CurrencyService {
     private SecurityService securityService;
 
     @Override
-    public void save(CurrencyRecord currency) {
-        currencyRepository.save(currency);
+    public CurrencyRecord save(CurrencyRecord currency) {
+        return currencyRepository.save(currency);
     }
 
     @Override

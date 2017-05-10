@@ -56,7 +56,7 @@ public class UserValidator implements Validator {
         //Add Validation for DOB
 
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, ADDRESS, NOT_EMPTY);
-        if (user.getAddress().length() < 6 || user.getAddress().length() > 200) {
+        if (user.getAddress().length() < 6 || user.getAddress().length() > 40) {
             errors.rejectValue(ADDRESS, "Size.userForm.address");
         }
 
@@ -92,7 +92,7 @@ public class UserValidator implements Validator {
         }
 
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, EMAIL, NOT_EMPTY);
-        if (user.getEmail().length() < 6 || user.getEmail().length() > 64) {
+        if (user.getEmail().length() < 6 || user.getEmail().length() > 32) {
             errors.rejectValue(EMAIL, "Size.userForm.email");
         }
         if(!EmailValidator.getInstance().isValid(user.getEmail())){

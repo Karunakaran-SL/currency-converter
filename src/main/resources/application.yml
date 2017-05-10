@@ -1,0 +1,27 @@
+spring:
+  profiles:
+    active: local
+  mvc:
+    view:
+      prefix: /
+      suffix: .jsp
+      
+---
+
+spring:
+  profiles: local
+  jpa:
+    show-sql: true
+    
+---
+
+spring:
+  profiles: development
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+  datasource:
+    url: jdbc:mysql://sql12.freemysqlhosting.net:3306/sql12173536
+    username: sql12173536
+    password: EEtm6CrXYb

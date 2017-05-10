@@ -6,7 +6,7 @@ import com.converter.currency.demo.exception.CurrencyException;
 import com.converter.currency.demo.model.CurrencyRecord;
 
 public interface CurrencyService {
-    void save(CurrencyRecord user);
+	CurrencyRecord save(CurrencyRecord user);
 
     List<CurrencyRecord> findTop10ByUsername();
     

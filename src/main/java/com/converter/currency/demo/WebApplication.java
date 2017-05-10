@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 
 @SpringBootApplication
+@SuppressWarnings({"deprecation","squid:CallToDeprecatedMethod"})
 public class WebApplication extends SpringBootServletInitializer{
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
