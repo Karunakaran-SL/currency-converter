@@ -13,7 +13,7 @@ import org.hibernate.annotations.CreationTimestamp;
 
 @Entity
 @Table(name = "currency")
-public class Currency {
+public class CurrencyRecord {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;

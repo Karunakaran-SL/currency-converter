@@ -17,7 +17,18 @@ import com.converter.currency.demo.service.UserService;
 @Component
 public class UserValidator implements Validator {
 	private SimpleDateFormat format = new SimpleDateFormat("yyyy-mm-dd");
-    @Autowired
+	private static final String NOT_EMPTY = "NotEmpty";
+	private static final String DOB = "dob";
+	private static final String ADDRESS="address";
+	private static final String ZIPCODE ="zipCode";
+	private static final String CITY = "city";
+	private static final String COUNTRY = "country";
+	private static final String USERNAME = "username";
+	private static final String P_FILED = "password";
+	private static final String P_CONF = "passwordConfirm";
+	private static final String EMAIL = "email";
+
+	@Autowired
     private UserService userService;
 
     @Override
@@ -33,59 +44,59 @@ public class UserValidator implements Validator {
     }
 
 	private void validateSecondaryFields(User user, Errors errors) {
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "dob", "NotEmpty");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, DOB, NOT_EMPTY);
         try {
 			Date date = format.parse(user.getDob());
 			if(date.getTime() > new Date().getTime()){
-				errors.rejectValue("dob", "Invalid.userForm.dob");
+				errors.rejectValue(DOB, "Invalid.userForm.dob");
 			}
 		} catch (ParseException e) {
-			errors.rejectValue("dob", "Invalid.userForm.dob");
+			errors.rejectValue(DOB, "Invalid.userForm.dob");
 		}
         //Add Validation for DOB
 
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "address", "NotEmpty");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, ADDRESS, NOT_EMPTY);
         if (user.getAddress().length() < 6 || user.getAddress().length() > 200) {
-            errors.rejectValue("address", "Size.userForm.address");
+            errors.rejectValue(ADDRESS, "Size.userForm.address");
         }
 
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "zipCode", "NotEmpty");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, ZIPCODE, NOT_EMPTY);
         if (user.getZipCode().length() < 6 || user.getZipCode().length() > 10) {
-           errors.rejectValue("zipCode", "Size.userForm.zipCode");
+           errors.rejectValue(ZIPCODE, "Size.userForm.zipCode");
         }
 
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "city", "NotEmpty");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, CITY, NOT_EMPTY);
         if (user.getCity().length() < 2 || user.getCity().length() > 32) {
-            errors.rejectValue("city", "Size.userForm.city");
+            errors.rejectValue(CITY, "Size.userForm.city");
         }
 
-       ValidationUtils.rejectIfEmptyOrWhitespace(errors, "country", "NotEmpty");
+       ValidationUtils.rejectIfEmptyOrWhitespace(errors, COUNTRY, NOT_EMPTY);
 	}
 
 	private void validatePrimaryFields(User user, Errors errors) {
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "username", "NotEmpty");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, USERNAME, NOT_EMPTY);
         if (user.getUsername().length() < 4 || user.getUsername().length() > 32) {
-            errors.rejectValue("username", "Size.userForm.username");
+            errors.rejectValue(USERNAME, "Size.userForm.username");
         }
         if (userService.findByUsername(user.getUsername()) != null) {
-            errors.rejectValue("username", "Duplicate.userForm.username");
+            errors.rejectValue(USERNAME, "Duplicate.userForm.username");
         }
 
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "NotEmpty");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, P_FILED, NOT_EMPTY);
         if (user.getPassword().length() < 4 || user.getPassword().length() > 32) {
-            errors.rejectValue("password", "Size.userForm.password");
+            errors.rejectValue(P_FILED, "Size.userForm.password");
         }
 
         if (!user.getPasswordConfirm().equals(user.getPassword())) {
-            errors.rejectValue("passwordConfirm", "Diff.userForm.passwordConfirm");
+            errors.rejectValue(P_CONF, "Diff.userForm.passwordConfirm");
         }
 
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "NotEmpty");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, EMAIL, NOT_EMPTY);
         if (user.getEmail().length() < 6 || user.getEmail().length() > 64) {
-            errors.rejectValue("email", "Size.userForm.email");
+            errors.rejectValue(EMAIL, "Size.userForm.email");
         }
         if(!EmailValidator.getInstance().isValid(user.getEmail())){
-            errors.rejectValue("email", "Invalid.userForm.email");
+            errors.rejectValue(EMAIL, "Invalid.userForm.email");
         }
 	}
 }

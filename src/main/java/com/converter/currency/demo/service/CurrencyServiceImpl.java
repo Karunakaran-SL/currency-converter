@@ -4,16 +4,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import com.converter.currency.demo.exception.CurrencyException;
-import com.converter.currency.demo.model.Currency;
+import com.converter.currency.demo.model.CurrencyRecord;
 import com.converter.currency.demo.repository.CurrencyRepository;
 
 @Service
 public class CurrencyServiceImpl implements CurrencyService {
+	private static final Logger LOGGER = LoggerFactory.getLogger(CurrencyServiceImpl.class);
     @Autowired
     private CurrencyRepository currencyRepository;
     
@@ -21,23 +24,23 @@ public class CurrencyServiceImpl implements CurrencyService {
     private SecurityService securityService;
 
     @Override
-    public void save(Currency currency) {
+    public void save(CurrencyRecord currency) {
         currencyRepository.save(currency);
     }
 
     @Override
-    public List<Currency> findTop10ByUsername() {
+    public List<CurrencyRecord> findTop10ByUsername() {
         try {
 			return currencyRepository.findAllByUsernameTop2ByOrderByIdDesc(securityService.findLoggedInUsername());
 		} catch (Exception e) {
-			//Incase of no element found
-			e.printStackTrace();
+			LOGGER.error(e.getMessage());
 		}
         return new ArrayList<>();
     }
     
     @Override
     public Double getCurrencyRateFor(String source, String currency, String date) throws CurrencyException{
+    	Double result = Double.valueOf(0.0);
     	RestTemplate restTemplate = new RestTemplate();
     	String value = restTemplate.getForObject(String.
     			format("http://apilayer.net/api/historical?access_key"
@@ -47,21 +50,20 @@ public class CurrencyServiceImpl implements CurrencyService {
     	if(jsonObject.getBoolean("success")){
     		JSONObject quotes = jsonObject.getJSONObject("quotes");
         	for(String key : quotes.keySet()){
-        		return quotes.getDouble(key);
+        		result = quotes.getDouble(key);
         	}
     	}else{
     		throw new CurrencyException("Invalid response from external API");
     	}
-    	return new Double(0.0);
+    	return result;
     }
     
     @Override
-    public Currency findLatest(){
+    public CurrencyRecord findLatest(){
     	try {
 			return currencyRepository.findLatest(securityService.findLoggedInUsername());
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			LOGGER.error(e.getMessage());
 		}
     	return null;
     }

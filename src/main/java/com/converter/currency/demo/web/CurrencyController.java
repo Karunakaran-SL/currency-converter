@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.converter.currency.demo.exception.CurrencyException;
-import com.converter.currency.demo.model.Currency;
+import com.converter.currency.demo.model.CurrencyRecord;
 import com.converter.currency.demo.service.CurrencyService;
 import com.converter.currency.demo.validator.CurrencyValidator;
 
@@ -23,9 +23,9 @@ public class CurrencyController {
 
 	@RequestMapping(value = {"/","/welcome"}, method = RequestMethod.GET)
 	public String registration(Model model) {
-		model.addAttribute("currencyForm", new Currency());
+		model.addAttribute("currencyForm", new CurrencyRecord());
 		model.addAttribute("tasks", currencyService.findTop10ByUsername());
-		Currency currency = currencyService.findLatest();
+		CurrencyRecord currency = currencyService.findLatest();
 		if(currency!=null){
 			model.addAttribute("searchedCurrency",currency);
 		}
@@ -33,7 +33,7 @@ public class CurrencyController {
 	}
 
 	@RequestMapping(value = {"/","/welcome"}, method = RequestMethod.POST)
-	public String registration(@ModelAttribute("currencyForm") Currency currencyForm, BindingResult bindingResult, Model model) {
+	public String registration(@ModelAttribute("currencyForm") CurrencyRecord currencyForm, BindingResult bindingResult, Model model) {
 		try {
 			currencyValidator.validate(currencyForm, bindingResult);
 
@@ -43,7 +43,6 @@ public class CurrencyController {
 			currencyForm.setValue(currencyService.getCurrencyRateFor("USD", currencyForm.getCurrency(), currencyForm.getDate()));
 			currencyService.save(currencyForm);
 		} catch (CurrencyException e) {
-			//TODO Add logger
 			model.addAttribute("error", "Error while retrive data from server "+e.getMessage());
 		}
 		return "redirect:/welcome";

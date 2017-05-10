@@ -17,3 +17,8 @@ Run application as spring boot, application will start on port localhost:8080
 Run application as war, go to cd target/ --> application will start on port localhost:8080
 
 # java -jar currency-converter-1.3.5.RELEASE.war
+
+
+Sonar Reports 
+
+# https://sonarqube.com/dashboard?id=org.springframework.boot%3Acurrency-converter

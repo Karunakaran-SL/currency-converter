@@ -10,7 +10,7 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
-import com.converter.currency.demo.model.Currency;
+import com.converter.currency.demo.model.CurrencyRecord;
 import com.converter.currency.demo.model.User;
 import com.converter.currency.demo.service.CurrencyService;
 
@@ -27,7 +27,7 @@ public class CurrencyValidator implements Validator {
 
 	@Override
     public void validate(Object o, Errors errors) {
-        Currency currency = (Currency) o;
+        CurrencyRecord currency = (CurrencyRecord) o;
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "date", "NotEmpty");
         try {
 			if(format.parse(currency.getDate()).getTime() > new Date().getTime()){
