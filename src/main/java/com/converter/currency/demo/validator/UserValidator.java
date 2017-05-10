@@ -1,5 +1,9 @@
 package com.converter.currency.demo.validator;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -12,6 +16,7 @@ import com.converter.currency.demo.service.UserService;
 
 @Component
 public class UserValidator implements Validator {
+	private SimpleDateFormat format = new SimpleDateFormat("yyyy-mm-dd");
     @Autowired
     private UserService userService;
 
@@ -46,11 +51,19 @@ public class UserValidator implements Validator {
             errors.rejectValue("email", "Size.userForm.email");
         }
         if(!EmailValidator.getInstance().isValid(user.getEmail())){
-        	 errors.rejectValue("email", "Invalid.userForm.email");
+            errors.rejectValue("email", "Invalid.userForm.email");
         }
         
 
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "dob", "NotEmpty");
+        try {
+			Date date = format.parse(user.getDob());
+			if(date.getTime() > new Date().getTime()){
+				errors.rejectValue("dob", "Invalid.userForm.dob");
+			}
+		} catch (ParseException e) {
+			errors.rejectValue("dob", "Invalid.userForm.dob");
+		}
         //Add Validation for DOB
 
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "address", "NotEmpty");
@@ -60,7 +73,7 @@ public class UserValidator implements Validator {
 
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "zipCode", "NotEmpty");
         if (user.getZipCode().length() < 6 || user.getZipCode().length() > 10) {
-            errors.rejectValue("zipCode", "Size.userForm.zipCode");
+           errors.rejectValue("zipCode", "Size.userForm.zipCode");
         }
 
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "city", "NotEmpty");
@@ -68,10 +81,6 @@ public class UserValidator implements Validator {
             errors.rejectValue("city", "Size.userForm.city");
         }
 
-       /* ValidationUtils.rejectIfEmptyOrWhitespace(errors, "country", "NotEmpty");
-        if (user.getCountry().name().length() < 2 || user.getCountry().name().length() > 32) {
-            errors.rejectValue("country", "Size.userForm.country");
-        }*/
-
+       ValidationUtils.rejectIfEmptyOrWhitespace(errors, "country", "NotEmpty");
     }
 }

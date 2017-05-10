@@ -46,7 +46,7 @@
 					<h2 class="form-signin-heading">Find Currency Rate</h2>
 					<spring:bind path="currency">
 						<div class="form-group ${status.error ? 'has-error' : ''}">
-							<form:select path="currency" class="form-control">
+							<form:select id="selectCurrency" path="currency" class="form-control">
 								<option>INR</option>
 								<option selected="selected">EUR</option>
 								<option>GBP</option>

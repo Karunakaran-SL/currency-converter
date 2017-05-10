@@ -3,17 +3,17 @@ package com.converter.currency.demo;
 import java.util.HashSet;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.web.SpringBootServletInitializer;
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.converter.currency.demo.model.Country;
-import com.converter.currency.demo.model.Role;
 import com.converter.currency.demo.model.User;
 import com.converter.currency.demo.repository.RoleRepository;
 import com.converter.currency.demo.repository.UserRepository;
@@ -47,6 +47,15 @@ public class WebApplication extends SpringBootServletInitializer{
             userRepository.save(user);
         }
         return null;
+    }
+    
+    @Bean(name = "messageSource")
+    public MessageSource messageSource() {
+       ReloadableResourceBundleMessageSource messageSource = 
+           new ReloadableResourceBundleMessageSource();
+       messageSource.setBasename("classpath:ValidationMessages");
+       messageSource.setCacheSeconds(5);
+       return messageSource;
     }
     
 }
