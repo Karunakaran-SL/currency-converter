@@ -22,6 +22,9 @@ public class CurrencyServiceImpl implements CurrencyService {
     
     @Autowired
     private SecurityService securityService;
+    
+    @Autowired
+    private StatsService statsService;
 
     @Override
     public CurrencyRecord save(CurrencyRecord currency) {
@@ -40,6 +43,7 @@ public class CurrencyServiceImpl implements CurrencyService {
     
     @Override
     public Double getCurrencyRateFor(String source, String currency, String date) throws CurrencyException{
+    	statsService.incrementCount(StatsService.TOTAL_CURRENCY_CALL);
     	Double result = Double.valueOf(0.0);
     	RestTemplate restTemplate = new RestTemplate();
     	String value = restTemplate.getForObject(String.
@@ -53,6 +57,7 @@ public class CurrencyServiceImpl implements CurrencyService {
         		result = quotes.getDouble(key);
         	}
     	}else{
+    		statsService.incrementCount(StatsService.TOTAL_CURRENCY_CALL_ERROR);
     		throw new CurrencyException("Invalid response from external API");
     	}
     	return result;
