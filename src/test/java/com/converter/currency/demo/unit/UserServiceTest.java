@@ -32,7 +32,7 @@ public class UserServiceTest {
 	@Test
 	public void testSave(){
 		User user = new User();
-		user.setUsername("test123");
+		user.setUsername("test");
 		user.setPassword("test123");
 		Mockito.when(bCryptPasswordEncoder.encode("test123")).thenReturn("test123");
 		Mockito.when(roleRepository.findAll()).thenReturn(null);
