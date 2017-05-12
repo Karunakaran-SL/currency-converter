@@ -53,7 +53,7 @@ public class CurrencyControllerTest {
 		Mockito.when(currencyService.findTop10ByUsername()).thenReturn(Arrays.asList(new CurrencyRecord()));
 		Mockito.when(currencyService.findLatest()).thenReturn(currencyRecord);
 		Model model = new ExtendedModelMap();
-		String result = controller.registration(model);
+		String result = controller.currency(model);
 		assertEquals("welcome", result);
 		CurrencyRecord currencyRecord2 = (CurrencyRecord)model.asMap().get("searchedCurrency");
 		assertEquals(currencyRecord.getCreateTime(), currencyRecord2.getCreateTime());
@@ -66,7 +66,7 @@ public class CurrencyControllerTest {
 		
 		Mockito.when(currencyService.findLatest()).thenReturn(null);
 		model = new ExtendedModelMap();
-		result = controller.registration(model);
+		result = controller.currency(model);
 		assertEquals("welcome", result);
 	}
 
@@ -86,15 +86,15 @@ public class CurrencyControllerTest {
 			Mockito.when(bindingResult.hasErrors()).thenReturn(false);
 			Model model = new ExtendedModelMap();
 
-			String result = controller.registration(currencyRecord,bindingResult,model);
+			String result = controller.currency(currencyRecord,bindingResult,model);
 			assertEquals("redirect:/welcome", result);
 			
 			Mockito.when(currencyService.getCurrencyRateFor("USD",currencyRecord.getCurrency(),currencyRecord.getDate())).thenThrow(new CurrencyException("Testing"));
-			result = controller.registration(currencyRecord,bindingResult,model);
+			result = controller.currency(currencyRecord,bindingResult,model);
 			assertEquals("redirect:/welcome", result);
 			
 			Mockito.when(bindingResult.hasErrors()).thenReturn(true);
-			result = controller.registration(currencyRecord,bindingResult,model);
+			result = controller.currency(currencyRecord,bindingResult,model);
 			assertEquals("welcome", result);
 			
 		} catch (Exception e) {

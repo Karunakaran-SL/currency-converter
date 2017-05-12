@@ -96,7 +96,7 @@ public class AutomationTest {
 		assertTrue(value.contains("These passwords don't match."));
 	}
 
-	@Then("^Message displayed Username Length min (\\d+)$")
+	@Then("^Then Message displayed invalid Username$")
 	public void message_displayed_Username_Length_min(int arg1) throws Throwable {
 		String value = driver.findElement(By.xpath("//*[@id=\"username.errors\"]")).getText();
 		assertTrue(value.contains("Please use between 4 and 32 characters."));
@@ -106,5 +106,76 @@ public class AutomationTest {
 	public void message_displayed_Invalid_Email() throws Throwable {
 		String value = driver.findElement(By.xpath("//*[@id=\"email.errors\"]")).getText();
 		assertTrue(value.contains("Invalid email address"));
+	}
+	
+	@Then("^Message displayed invalid Username$")
+	public void message_displayed_invalid_Username() throws Throwable {
+	    // Write code here that turns the phrase above into concrete actions
+	    
+	}
+
+	@Then("^Message displayed Username already exist$")
+	public void message_displayed_Username_already_exist() throws Throwable {
+	    // Write code here that turns the phrase above into concrete actions
+	    
+	}
+
+	@Then("^Message displayed invalid password$")
+	public void message_displayed_invalid_password() throws Throwable {
+	    // Write code here that turns the phrase above into concrete actions
+	    
+	}
+
+	@Then("^Message displayed Invalid Dob$")
+	public void message_displayed_Invalid_Dob() throws Throwable {
+	    // Write code here that turns the phrase above into concrete actions
+	    
+	}
+
+	@Then("^Message displayed Invalid Address city zipcode$")
+	public void message_displayed_Invalid_Address_city_zipcode() throws Throwable {
+	    // Write code here that turns the phrase above into concrete actions
+	    
+	}
+
+	@Given("^Click Submit Button$")
+	public void click_Submit_Button() throws Throwable {
+	    // Write code here that turns the phrase above into concrete actions
+	    
+	}
+
+	@Then("^Result and History shows value for currency as \"([^\"]*)\" and today date$")
+	public void result_and_History_shows_value_for_currency_as_and_today_date(String arg1) throws Throwable {
+	    // Write code here that turns the phrase above into concrete actions
+	    
+	}
+
+	@Given("^User Change the Currency to AUD$")
+	public void user_Change_the_Currency_to_AUD() throws Throwable {
+	    // Write code here that turns the phrase above into concrete actions
+	    
+	}
+	@Given("^User Change the Date to \"([^\"]*)\"$")
+	public void user_Change_the_Date_to(String arg1) throws Throwable {
+	    // Write code here that turns the phrase above into concrete actions
+	    
+	}
+
+	@Then("^Result and History shows value for currency as \"([^\"]*)\" and date as \"([^\"]*)\"$")
+	public void result_and_History_shows_value_for_currency_as_and_date_as(String arg1, String arg2) throws Throwable {
+	    // Write code here that turns the phrase above into concrete actions
+	    
+	}
+
+	@Given("^Click Logout$")
+	public void click_Logout() throws Throwable {
+	    // Write code here that turns the phrase above into concrete actions
+	    
+	}
+
+	@Then("^Go back to login screen$")
+	public void go_back_to_login_screen() throws Throwable {
+	    // Write code here that turns the phrase above into concrete actions
+	    
 	}
 }
