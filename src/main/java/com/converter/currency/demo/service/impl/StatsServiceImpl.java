@@ -1,10 +1,12 @@
-package com.converter.currency.demo.service;
+package com.converter.currency.demo.service.impl;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.springframework.stereotype.Service;
+
+import com.converter.currency.demo.service.api.StatsService;
 
 @Service
 public class StatsServiceImpl implements StatsService {

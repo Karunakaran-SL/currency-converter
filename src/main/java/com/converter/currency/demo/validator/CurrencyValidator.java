@@ -17,7 +17,7 @@ import com.converter.currency.demo.model.User;
 
 @Component
 public class CurrencyValidator implements Validator {
-	List<String> currencyList = new ArrayList<String>(Arrays.asList("INR", "EUR", "GBP", "NZD", "AUD", "JPY", "HUF"));
+	List<String> currencyList = new ArrayList<>(Arrays.asList("INR", "EUR", "GBP", "NZD", "AUD", "JPY", "HUF"));
 	SimpleDateFormat format = new SimpleDateFormat("yyyy-mm-dd");
     @Override
     public boolean supports(Class<?> aClass) {
@@ -37,7 +37,10 @@ public class CurrencyValidator implements Validator {
 		}
     }
 
-	public String validate(String currency, String dateString) {
+	public String validateApi(String currency, String dateString) {
+		if(currency==null || dateString==null){
+			return "Both currency and date is mandatory";
+		}
 		if(!currencyList.contains(currency)){
 			return String.format("Currency %s is not supported, Supported currencies are INR EUR GBP NZD AUD JPY HUF", currency);
 		}

@@ -19,8 +19,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.converter.currency.demo.model.CurrencyRecord;
 import com.converter.currency.demo.repository.CurrencyRepository;
-import com.converter.currency.demo.service.CurrencyService;
-import com.converter.currency.demo.service.SecurityService;
+import com.converter.currency.demo.service.api.CurrencyService;
+import com.converter.currency.demo.service.api.SecurityService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest

@@ -17,7 +17,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.converter.currency.demo.service.SecurityService;
+import com.converter.currency.demo.service.api.SecurityService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest

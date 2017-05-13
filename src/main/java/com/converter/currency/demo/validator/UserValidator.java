@@ -12,7 +12,7 @@ import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
 import com.converter.currency.demo.model.User;
-import com.converter.currency.demo.service.UserService;
+import com.converter.currency.demo.service.api.UserService;
 
 @Component
 public class UserValidator implements Validator {

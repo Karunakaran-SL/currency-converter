@@ -1,4 +1,4 @@
-package com.converter.currency.demo.service;
+package com.converter.currency.demo.service.api;
 
 import com.converter.currency.demo.model.User;
 

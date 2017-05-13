@@ -16,7 +16,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import com.converter.currency.demo.model.Role;
 import com.converter.currency.demo.model.User;
 import com.converter.currency.demo.repository.UserRepository;
-import com.converter.currency.demo.service.UserDetailsServiceImpl;
+import com.converter.currency.demo.service.impl.UserDetailsServiceImpl;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest

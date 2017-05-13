@@ -1,4 +1,4 @@
-package com.converter.currency.demo.service;
+package com.converter.currency.demo.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +15,10 @@ import com.converter.currency.demo.cache.CacheConfig;
 import com.converter.currency.demo.exception.CurrencyException;
 import com.converter.currency.demo.model.CurrencyRecord;
 import com.converter.currency.demo.repository.CurrencyRepository;
+import com.converter.currency.demo.service.api.CurrencyService;
+import com.converter.currency.demo.service.api.SecurityService;
+import com.converter.currency.demo.service.api.StatsService;
+import com.converter.currency.demo.service.type.Stats;
 
 @Service
 public class CurrencyServiceImpl implements CurrencyService {
@@ -44,9 +48,9 @@ public class CurrencyServiceImpl implements CurrencyService {
     }
     
     @Override
-    @Cacheable(CacheConfig.EXTERNAL)
+    @Cacheable(CacheConfig.EXTERNAL_REQUEST)
     public Double getCurrencyRateFor(String source, String currency, String date) throws CurrencyException{
-    	statsService.incrementCount(StatsService.TOTAL_CURRENCY_CALL);
+    	statsService.incrementCount(Stats.TOTAL_CURRENCY_CALL.getValue());
     	Double result = Double.valueOf(0.0);
     	RestTemplate restTemplate = new RestTemplate();
     	String value = restTemplate.getForObject(String.
@@ -60,7 +64,7 @@ public class CurrencyServiceImpl implements CurrencyService {
         		result = quotes.getDouble(key);
         	}
     	}else{
-    		statsService.incrementCount(StatsService.TOTAL_CURRENCY_CALL_ERROR);
+    		statsService.incrementCount(Stats.TOTAL_CURRENCY_CALL_ERROR.getValue());
     		throw new CurrencyException("Invalid response from external API");
     	}
     	return result;

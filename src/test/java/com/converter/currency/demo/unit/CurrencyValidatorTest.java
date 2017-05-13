@@ -50,4 +50,47 @@ public class CurrencyValidatorTest {
 		currencyValidator.validate(currencyRecord, bindingResult);
 	}
 	
+	@Test
+	public void testValidateApi(){
+		String actual = currencyValidator.validateApi(null, null);
+		assertEquals("Both currency and date is mandatory",actual);
+		
+		actual = currencyValidator.validateApi("", null);
+		assertEquals("Both currency and date is mandatory",actual);
+		
+		actual = currencyValidator.validateApi(null, "");
+		assertEquals("Both currency and date is mandatory",actual);
+		
+		actual = currencyValidator.validateApi("", "");
+		assertEquals("Currency  is not supported, Supported currencies are INR EUR GBP NZD AUD JPY HUF",actual);
+		
+		actual = currencyValidator.validateApi("sdasfd", "dsasf");
+		assertEquals("Currency sdasfd is not supported, Supported currencies are INR EUR GBP NZD AUD JPY HUF",actual);
+		
+		actual = currencyValidator.validateApi("INR", null);
+		assertEquals("Both currency and date is mandatory",actual);
+		
+		actual = currencyValidator.validateApi("INR", "");
+		assertEquals("Invalid date format, Supported format is yyyy-mm-dd",actual);
+		
+		actual = currencyValidator.validateApi("INR", "dafaf");
+		assertEquals("Invalid date format, Supported format is yyyy-mm-dd",actual);
+		
+		actual = currencyValidator.validateApi(null, "2017-03-03");
+		assertEquals("Both currency and date is mandatory",actual);
+		
+		actual = currencyValidator.validateApi("", "2017-03-03");
+		assertEquals("Currency  is not supported, Supported currencies are INR EUR GBP NZD AUD JPY HUF",actual);
+		
+		actual = currencyValidator.validateApi(null, "2017-03-03");
+		assertEquals("Both currency and date is mandatory",actual);
+		
+		actual = currencyValidator.validateApi("INR", "2017-03-03");
+		assertEquals("success",actual);
+		
+		actual = currencyValidator.validateApi("INR", "2018-03-03");
+		assertEquals("Future date are not supported",actual);
+		
+	}
+	
 }

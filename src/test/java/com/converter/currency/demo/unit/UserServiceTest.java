@@ -2,6 +2,9 @@ package com.converter.currency.demo.unit;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
@@ -11,10 +14,11 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import com.converter.currency.demo.WebApplication;
 import com.converter.currency.demo.model.User;
 import com.converter.currency.demo.repository.RoleRepository;
 import com.converter.currency.demo.repository.UserRepository;
-import com.converter.currency.demo.service.UserService;
+import com.converter.currency.demo.service.api.UserService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -49,5 +53,26 @@ public class UserServiceTest {
 		Mockito.when(userRepository.findByUsername("test123")).thenReturn(user);
 		User user2 = userService.findByUsername("test123");
 		assertEquals(user.getUsername(), user2.getUsername());
+	}
+	
+	@Test
+	public void testFindByUsername1(){
+		User user = new User();
+		user.setPassword("test123");
+		Mockito.when(userRepository.findAll()).thenReturn(Arrays.asList(user));
+	}
+	
+	@Test
+	public void testFindByUsername2(){
+		User user = new User();
+		user.setPassword("test123");
+		Mockito.when(userRepository.findAll()).thenReturn(null);
+	}
+	
+	@Test
+	public void testFindByUsername3(){
+		User user = new User();
+		user.setPassword("test123");
+		Mockito.when(userRepository.findAll()).thenReturn(new ArrayList<>());
 	}
 }

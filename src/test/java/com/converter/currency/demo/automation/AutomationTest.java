@@ -17,7 +17,7 @@ import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
-@SuppressWarnings("deprecation")
+@SuppressWarnings({"deprecation","squid:S2187"})
 @ContextConfiguration(classes = WebApplication.class, loader = SpringApplicationContextLoader.class)
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration

@@ -1,6 +1,8 @@
 package com.converter.currency.demo.unit;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 import java.util.Arrays;
 import java.util.Date;
@@ -20,7 +22,7 @@ import org.springframework.web.servlet.View;
 
 import com.converter.currency.demo.exception.CurrencyException;
 import com.converter.currency.demo.model.CurrencyRecord;
-import com.converter.currency.demo.service.CurrencyService;
+import com.converter.currency.demo.service.api.CurrencyService;
 import com.converter.currency.demo.validator.CurrencyValidator;
 import com.converter.currency.demo.web.CurrencyController;
 @RunWith(SpringRunner.class)
@@ -101,4 +103,35 @@ public class CurrencyControllerTest {
 			e.printStackTrace();
 		}
 	}
+	
+	@Test
+	public void testRegistration3(){
+		try {
+			Mockito.when(currencyValidator.validateApi("", "")).thenReturn("Failed");
+			String result = controller.currencyApi("", "");
+			assertEquals("Failed", result);
+			
+			Mockito.when(currencyValidator.validateApi("INR", "2017-03-03")).thenReturn("success");
+			Mockito.when(currencyService.getCurrencyRateFor("USD","INR","2017-03-03")).thenThrow(new CurrencyException("Testing"));
+			result = controller.currencyApi("INR", "2017-03-03");
+			assertEquals("Testing", result);
+
+			Mockito.when(currencyService.getCurrencyRateFor("USD","INR","2017-03-03")).thenReturn(Double.valueOf(0.0));
+			result = controller.currencyApi("INR", "2017-03-03");
+			assertEquals("0.0", result);
+			
+			/*Mockito.when(currencyService.getCurrencyRateFor("USD",currencyRecord.getCurrency(),currencyRecord.getDate())).thenThrow(new CurrencyException("Testing"));
+			result = controller.currency(currencyRecord,bindingResult,model);
+			assertEquals("redirect:/welcome", result);
+			Mockito.when(currencyService.getCurrencyRateFor("USD","INR","")).thenReturn(Double.valueOf(0.0));
+			
+			Mockito.when(bindingResult.hasErrors()).thenReturn(true);
+			result = controller.currency(currencyRecord,bindingResult,model);
+			assertEquals("welcome", result);*/
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 }

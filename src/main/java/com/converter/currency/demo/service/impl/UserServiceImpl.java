@@ -1,8 +1,10 @@
-package com.converter.currency.demo.service;
+package com.converter.currency.demo.service.impl;
 
 import com.converter.currency.demo.model.User;
 import com.converter.currency.demo.repository.RoleRepository;
 import com.converter.currency.demo.repository.UserRepository;
+import com.converter.currency.demo.service.api.UserService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;

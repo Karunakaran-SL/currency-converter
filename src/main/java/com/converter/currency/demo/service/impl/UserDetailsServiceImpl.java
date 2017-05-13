@@ -1,4 +1,4 @@
-package com.converter.currency.demo.service;
+package com.converter.currency.demo.service.impl;
 
 import java.util.HashSet;
 import java.util.Set;

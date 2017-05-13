@@ -17,8 +17,8 @@ import org.springframework.validation.BindingResult;
 
 import com.converter.currency.demo.model.Country;
 import com.converter.currency.demo.model.User;
-import com.converter.currency.demo.service.SecurityService;
-import com.converter.currency.demo.service.UserService;
+import com.converter.currency.demo.service.api.SecurityService;
+import com.converter.currency.demo.service.api.UserService;
 import com.converter.currency.demo.validator.UserValidator;
 import com.converter.currency.demo.web.UserController;
 

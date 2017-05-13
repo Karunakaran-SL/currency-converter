@@ -1,7 +1,5 @@
 package com.converter.currency.demo.web;
 
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,7 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.converter.currency.demo.exception.CurrencyException;
 import com.converter.currency.demo.model.CurrencyRecord;
-import com.converter.currency.demo.service.CurrencyService;
+import com.converter.currency.demo.service.api.CurrencyService;
 import com.converter.currency.demo.validator.CurrencyValidator;
 
 @Controller
@@ -54,8 +52,8 @@ public class CurrencyController {
 	
 	@RequestMapping(value = {"/api/currency"}, method = RequestMethod.GET)
 	@ResponseBody
-	public String currencyApi(@RequestParam("currency") String currency,@RequestParam("date")String dateString, HttpServletResponse response) {
-		String result = currencyValidator.validate(currency,dateString);
+	public String currencyApi(@RequestParam("currency") String currency,@RequestParam("date")String dateString) {
+		String result = currencyValidator.validateApi(currency,dateString);
 		try {
 			if ("success".equalsIgnoreCase(result)) {
 				return String.valueOf(currencyService.getCurrencyRateFor("USD", currency, dateString));
