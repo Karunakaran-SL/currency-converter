@@ -110,72 +110,74 @@ public class AutomationTest {
 	
 	@Then("^Message displayed invalid Username$")
 	public void message_displayed_invalid_Username() throws Throwable {
-	    // Write code here that turns the phrase above into concrete actions
-	    
+		String value = driver.findElement(By.xpath("//*[@id=\"username.errors\"]")).getText();
+		assertTrue(value.contains("Please use between 4 and 32 characters."));
 	}
 
 	@Then("^Message displayed Username already exist$")
 	public void message_displayed_Username_already_exist() throws Throwable {
-	    // Write code here that turns the phrase above into concrete actions
-	    
+		String value = driver.findElement(By.xpath("//*[@id=\"username.errors\"]")).getText();
+		assertTrue(value.contains("Someone already has that username"));
 	}
 
 	@Then("^Message displayed invalid password$")
 	public void message_displayed_invalid_password() throws Throwable {
-	    // Write code here that turns the phrase above into concrete actions
-	    
+		String value = driver.findElement(By.xpath("//*[@id=\"password.errors\"]")).getText();
+		assertTrue(value.contains("Try one with at least 4 characters."));
 	}
 
 	@Then("^Message displayed Invalid Dob$")
 	public void message_displayed_Invalid_Dob() throws Throwable {
-	    // Write code here that turns the phrase above into concrete actions
-	    
+		driver.findElement(By.xpath("//*[@id=\"datefield\"]")).click();
+		driver.findElement(By.xpath("//*[@id=\"datefield\"]")).click();
 	}
 
 	@Then("^Message displayed Invalid Address city zipcode$")
 	public void message_displayed_Invalid_Address_city_zipcode() throws Throwable {
-	    // Write code here that turns the phrase above into concrete actions
-	    
+		String address = driver.findElement(By.xpath("//*[@id=\"address.errors\"]")).getText();
+		String city = driver.findElement(By.xpath("//*[@id=\"zipCode.errors\"]")).getText();
+		String zipcode = driver.findElement(By.xpath("//*[@id=\"city.errors\"]")).getText();
+		assertTrue(address.contains("Please use between 6 and 200 characters."));
+		assertTrue(city.contains("Please use between 6 and 10 characters."));
+		assertTrue(zipcode.contains("Please use between 2 and 32 characters."));
 	}
 
 	@Given("^Click Submit Button$")
 	public void click_Submit_Button() throws Throwable {
-	    // Write code here that turns the phrase above into concrete actions
-	    
+		driver.findElement(By.xpath("//*[@id=\"currencyForm\"]/button")).click();	    
 	}
 
 	@Then("^Result and History shows value for currency as \"([^\"]*)\" and today date$")
 	public void result_and_History_shows_value_for_currency_as_and_today_date(String arg1) throws Throwable {
-	    // Write code here that turns the phrase above into concrete actions
-	    
+		String value = driver.findElement(By.xpath("/html/body/div/div[2]/table/tbody/tr[2]/td[2]")).getText();
+		assertTrue(arg1.contains(value));
 	}
 
 	@Given("^User Change the Currency to AUD$")
 	public void user_Change_the_Currency_to_AUD() throws Throwable {
-	    // Write code here that turns the phrase above into concrete actions
-	    
+		driver.findElement(By.xpath("//*[@id=\"selectCurrency\"]/option[5]")).click();
 	}
 	@Given("^User Change the Date to \"([^\"]*)\"$")
 	public void user_Change_the_Date_to(String arg1) throws Throwable {
-	    // Write code here that turns the phrase above into concrete actions
-	    
+		driver.findElement(By.xpath("//*[@id=\"datefield\"]")).sendKeys(arg1);
 	}
 
 	@Then("^Result and History shows value for currency as \"([^\"]*)\" and date as \"([^\"]*)\"$")
 	public void result_and_History_shows_value_for_currency_as_and_date_as(String arg1, String arg2) throws Throwable {
-	    // Write code here that turns the phrase above into concrete actions
-	    
+		String value = driver.findElement(By.xpath("/html/body/div/div[2]/table/tbody/tr[2]/td[2]")).getText();
+		String date = driver.findElement(By.xpath("/html/body/div/div[2]/table/tbody/tr[1]/td[2]")).getText();
+		assertTrue(arg1.contains(value));
+		assertTrue(arg2.contains(date));
 	}
 
 	@Given("^Click Logout$")
 	public void click_Logout() throws Throwable {
-	    // Write code here that turns the phrase above into concrete actions
-	    
+		driver.findElement(By.xpath("/html/body/div/h2/a")).click();
 	}
 
 	@Then("^Go back to login screen$")
 	public void go_back_to_login_screen() throws Throwable {
-	    // Write code here that turns the phrase above into concrete actions
-	    
+		String value = driver.findElement(By.xpath("/html/body/div/form/h2")).getText();
+		assertTrue("Log in".contains(value));
 	}
 }

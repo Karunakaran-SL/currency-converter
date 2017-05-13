@@ -75,17 +75,17 @@ Description: This feature will test a Login and Logout functionality
   	And User submit the details by pressing submit
   	Then Message displayed Password Mismatch
   	
-  Scenario: Register New User Validation Invalid Email
+  Scenario: Register New User Validation Invalid Email 1
   	Given User is on LoginPage
   	And Click on Create Account Link
-  	And User enter Username as "mytest344" and Password as "mytest" and Conform as "mytest" and Email as "mytest@gmail" and Dob as "2000-01-01" and Address as "address123" and zipcode as "1234567" and city as "Chennai" and Country as "US"
+  	And User enter Username as "mytest344" and Password as "mytest" and Conform as "mytest" and Email as "mytest@gssfsf" and Dob as "2000-01-01" and Address as "address123" and zipcode as "1234567" and city as "Chennai" and Country as "US"
   	And User submit the details by pressing submit
   	Then Message displayed Invalid Email
   	
-   Scenario: Register New User Validation Invalid Email
+   Scenario: Register New User Validation Invalid Email 2
   	Given User is on LoginPage
   	And Click on Create Account Link
-  	And User enter Username as "mytest344" and Password as "mytest" and Conform as "mytest" and Email as "mytest@gmail.adsaaf" and Dob as "2000-01-01" and Address as "address123" and zipcode as "1234567" and city as "Chennai" and Country as "US"
+  	And User enter Username as "mytest344" and Password as "mytest" and Conform as "mytest" and Email as "mytest@gmdsafs.adsaaf" and Dob as "2000-01-01" and Address as "address123" and zipcode as "1234567" and city as "Chennai" and Country as "US"
   	And User submit the details by pressing submit
   	Then Message displayed Invalid Email
   	
@@ -136,7 +136,7 @@ Description: This feature will test a Login and Logout functionality
     Given User is on LoginPage
     And User enters Username as "test123" and Password as "test123"
     And User submit the credentials by pressing SignIn
-    And User Change the Date to "2017-03-03"
+    And User Change the Date to "03-03-2017"
     And Click Submit Button
     Then Result and History shows value for currency as "EUR" and date as "2017-03-03"
   	
