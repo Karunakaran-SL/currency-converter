@@ -18,7 +18,7 @@ import com.converter.currency.demo.model.User;
 @Component
 public class CurrencyValidator implements Validator {
 	List<String> currencyList = new ArrayList<>(Arrays.asList("INR", "EUR", "GBP", "NZD", "AUD", "JPY", "HUF"));
-	SimpleDateFormat format = new SimpleDateFormat("yyyy-mm-dd");
+	SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
     @Override
     public boolean supports(Class<?> aClass) {
         return User.class.equals(aClass);

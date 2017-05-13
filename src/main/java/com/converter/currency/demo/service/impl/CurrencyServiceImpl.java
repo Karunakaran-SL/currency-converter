@@ -1,6 +1,8 @@
 package com.converter.currency.demo.service.impl;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.json.JSONObject;
@@ -23,6 +25,7 @@ import com.converter.currency.demo.service.type.Stats;
 @Service
 public class CurrencyServiceImpl implements CurrencyService {
 	private static final Logger LOGGER = LoggerFactory.getLogger(CurrencyServiceImpl.class);
+	private SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
     @Autowired
     private CurrencyRepository currencyRepository;
     
@@ -53,10 +56,8 @@ public class CurrencyServiceImpl implements CurrencyService {
     	statsService.incrementCount(Stats.TOTAL_CURRENCY_CALL.getValue());
     	Double result = Double.valueOf(0.0);
     	RestTemplate restTemplate = new RestTemplate();
-    	String value = restTemplate.getForObject(String.
-    			format("http://apilayer.net/api/historical?access_key"
-    					+ "=86ff9d67eabd34d308bd8d42d7cbc61a&date=%s&currencies=%s", 
-    					date,currency), String.class);
+    	String url = formUrl(currency,date);
+    	String value = restTemplate.getForObject(url, String.class);
     	JSONObject jsonObject = new JSONObject(value);
     	if(jsonObject.getBoolean("success")){
     		JSONObject quotes = jsonObject.getJSONObject("quotes");
@@ -64,13 +65,24 @@ public class CurrencyServiceImpl implements CurrencyService {
         		result = quotes.getDouble(key);
         	}
     	}else{
+    		LOGGER.error("Error while questing external API "+jsonObject);
     		statsService.incrementCount(Stats.TOTAL_CURRENCY_CALL_ERROR.getValue());
     		throw new CurrencyException("Invalid response from external API");
     	}
     	return result;
     }
     
-    @Override
+    private String formUrl(String currency, String date) {
+    	if(format.format(new Date()).equalsIgnoreCase(date)){//Go for live query
+    		return String.format("http://apilayer.net/api/live?access_key="
+    				+ "86ff9d67eabd34d308bd8d42d7cbc61a&currencies=%s", currency);
+    	}
+    	return String.format("http://apilayer.net/api/historical?access_key"
+				+ "=86ff9d67eabd34d308bd8d42d7cbc61a&date=%s&currencies=%s", 
+				date,currency);
+	}
+
+	@Override
     public CurrencyRecord findLatest(){
     	try {
 			return currencyRepository.findLatest(securityService.findLoggedInUsername());

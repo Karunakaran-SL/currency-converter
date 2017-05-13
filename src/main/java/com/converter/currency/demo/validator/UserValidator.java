@@ -16,7 +16,7 @@ import com.converter.currency.demo.service.api.UserService;
 
 @Component
 public class UserValidator implements Validator {
-	private SimpleDateFormat format = new SimpleDateFormat("yyyy-mm-dd");
+	private SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 	private static final String NOT_EMPTY = "NotEmpty";
 	private static final String DOB = "dob";
 	private static final String ADDRESS="address";
